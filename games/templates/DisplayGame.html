@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Display Game Table </h4>
+                  <div class="table-responsive pt-3">
+                    <table class="table table-dark">
+                      <thead>
+                        <tr>
+                            <th>
+                                CATEGORY NAME
+                            </th>
+                           <th>
+                               GAME NAME
+                           </th>
+                            <th>
+                               GAME DESCRIPTION
+                            </th>
+                            <th>
+                               GAME PRICE
+                            </th>
+                            <th>
+                                GAME IMAGE
+                            </th>
+                            <th>
+                                OPTIONS
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                         {% for d in data %}
+                        <tr>
+                            <td>{{d.Category_name}}</td>
+                            <td>{{d.game_name}}</td>
+                            <td>{{d.game_desciption}}</td>
+                            <td>{{d.game_price}}</td>
+                            <td>
+                              <img src="{{d.game_image.url}}">
+                            </td>
+
+                          <td>
+                              <form action="{% url 'editgame' game_id=d.id %}">
+                                <button type="submit" class="btn btn-primary">EDIT</button>
+                              </form>
+                            </td>
+                            <td>
+                              <form action="{% url 'deletegame' dataid=d.id %}">
+                                <button type="submit" class="btn btn-secondary">DELETE</button>
+                              </form>
+                            </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+                <script>
+                    swal('{{i}}','','warning')
+                </script>
+            {% elif i.tags == 'error' %}
+                <script>
+                    swal('{{i}}','','error')
+                </script>
+            {% elif i.tags == 'success' %}
+                <script>
+                    swal('{{i}}','','success')
+                </script>
+            {% else %}
+                <script>
+                    swal('{{i}}','','info')
+                </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+</body>
+</html>
+{% endblock %}
